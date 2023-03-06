@@ -36,40 +36,42 @@ class PrimaryTextField extends StatefulWidget {
   bool isSimpleValidation;
   int maxLength;
   String numberText;
+  TextCapitalization textCapitalization;
   final Function(String value) onChange;
   final Function? prifixCallback;
   final TextEditingController controller;
   final TextInputType keyBoardType;
 
-  PrimaryTextField(
-      {Key? key,
-      required this.isPass,
-      required this.onChange,
-      this.prifixCallback,
-      this.isUploadBTN = false,
-      this.isPadding = true,
-      this.keyBoardType = TextInputType.text,
-      this.isPhone = false,
-      this.isEmail = false,
-      this.readOnly = false,
-      this.isOptional = false,
-      this.isName = false,
-      this.sufixIcon = "",
-      this.isSimpleValidation = true,
-      this.prefixIcon = "",
-      this.isTextPrifix = false,
-      required this.hintText,
-      this.errorText,
-      required this.width,
-      required this.controller,
-      this.callback,
-      this.maxLength = 100,
-      required this.headingText,
-      this.borderRadius = 10,
-      this.numberText = "",
-      this.sufixIconColor = AppColor.white,
-      this.maxLine = 1})
-      : super(key: key);
+  PrimaryTextField({
+    Key? key,
+    required this.isPass,
+    required this.onChange,
+    this.prifixCallback,
+    this.isUploadBTN = false,
+    this.isPadding = true,
+    this.keyBoardType = TextInputType.text,
+    this.isPhone = false,
+    this.isEmail = false,
+    this.readOnly = false,
+    this.isOptional = false,
+    this.isName = false,
+    this.sufixIcon = "",
+    this.isSimpleValidation = true,
+    this.prefixIcon = "",
+    this.isTextPrifix = false,
+    required this.hintText,
+    this.errorText,
+    required this.width,
+    required this.controller,
+    this.callback,
+    this.maxLength = 100,
+    required this.headingText,
+    this.borderRadius = 10,
+    this.numberText = "",
+    this.sufixIconColor = AppColor.white,
+    this.maxLine = 1,
+    this.textCapitalization = TextCapitalization.none,
+  }) : super(key: key);
 
   @override
   _PrimaryTextFieldState createState() => _PrimaryTextFieldState();
@@ -111,6 +113,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
                   height: SizeConfig.screenWidth * 0.02,
                 ),
           TextFormField(
+            textCapitalization: widget.textCapitalization,
             readOnly: widget.readOnly,
             controller: widget.controller,
             obscureText: _showPassword,
@@ -151,12 +154,11 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
                 }
               } else if (widget.isEmail) {
                 if (value == null || value.isEmpty) {
-                  return widget.errorText ??
-                      "Please enter ${widget.headingText.toLowerCase()}";
+                  return widget.errorText ?? "Please enter email address";
                 } else if (!RegExp(
                         r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
                     .hasMatch(value)) {
-                  return "Please enter valid Email";
+                  return "Please enter valid email";
                 }
               } else if (widget.isPhone) {
                 if (value == null || value.isEmpty || value[0] != "+") {

@@ -9,6 +9,7 @@ import 'package:biticonapp/RoutesAndBindings/app_routes.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../Common/AppBTN/pay_button.dart';
 import '../../../Common/custom_botttom_sheet.dart';
@@ -91,91 +92,127 @@ class HomeView extends StatelessWidget {
             ),
             Expanded(
               child: Obx(
-                () => ListView.builder(
-                  padding: const EdgeInsets.only(top: 10),
-                  shrinkWrap: true,
-                  itemCount: _serviceVM.coinDataList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: homeCoinTile(
-                        context: context,
-                        text: _serviceVM.coinDataList[index].ticker,
-                        text1: _serviceVM.coinDataList[index].ticker,
-                        price:
-                            "CHF ${double.parse(_serviceVM.coinDataList[index].price).toStringAsFixed(2)}",
-                        percentage:
-                            "${double.parse(_serviceVM.coinDataList[index].lotVolume).toStringAsFixed(2)}%",
-                        text1Color: AppColor.white,
-                        callback: () {
-                          rootVM.changeWallet(true);
-                          rootVM.changeIndex(2);
-                          // Get.toNamed(AppRoutes.coinDetailView);
+                () => _serviceVM.coinDataList.length != 0
+                    ? ListView.builder(
+                        padding: const EdgeInsets.only(top: 10),
+                        shrinkWrap: true,
+                        itemCount: _serviceVM.coinDataList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: homeCoinTile(
+                              printback: (index) {
+                                print("print =>> $index");
+                              },
+                              context: context,
+                              text: _serviceVM.coinDataList[index].ticker,
+                              text1: _serviceVM.coinDataList[index].ticker,
+                              price:
+                                  "CHF ${double.parse(_serviceVM.coinDataList[index].price).toStringAsFixed(2)}",
+                              percentage:
+                                  "${double.parse(_serviceVM.coinDataList[index].lotVolume).toStringAsFixed(2)}%",
+                              text1Color: AppColor.white,
+                              callback: () {
+                                rootVM.changeWallet(true);
+                                rootVM.changeIndex(2);
+                                // Get.toNamed(AppRoutes.coinDetailView);
+                              },
+                              graphList: _serviceVM.counterList,
+                              // graphList: _serviceVM.coinDataList[index].ticker ==
+                              //         "XBT/USD"
+                              //     ? _serviceVM.xBT
+                              //     : _serviceVM.coinDataList[index].ticker == "USD/USD"
+                              //         ? _serviceVM.uSD
+                              //         : _serviceVM.coinDataList[index].ticker ==
+                              //                 "ICP/USD"
+                              //             ? _serviceVM.iCP
+                              //             : _serviceVM.coinDataList[index].ticker ==
+                              //                     "MATIC/USD"
+                              //                 ? _serviceVM.mATIC
+                              //                 : _serviceVM.aDA,
+                            ),
+                          );
                         },
-                        graphList: _serviceVM.coinDataList[index].ticker ==
-                                "XBT/USD"
-                            ? _serviceVM.xBT
-                            : _serviceVM.coinDataList[index].ticker == "USD/USD"
-                                ? _serviceVM.uSD
-                                : _serviceVM.coinDataList[index].ticker ==
-                                        "ICP/USD"
-                                    ? _serviceVM.iCP
-                                    : _serviceVM.coinDataList[index].ticker ==
-                                            "MATIC/USD"
-                                        ? _serviceVM.mATIC
-                                        : _serviceVM.aDA,
-                        minValue: _serviceVM.coinDataList[index].ticker ==
-                                "XBT/USD"
-                            ? _serviceVM.xBTMaxMin.reduce((value, element) =>
-                                value > element ? value : element)
-                            : _serviceVM.coinDataList[index].ticker == "USD/USD"
-                                ? _serviceVM.uSDMaxMin.reduce((value, element) =>
-                                    value > element ? value : element)
-                                : _serviceVM.coinDataList[index].ticker ==
-                                        "ICP/USD"
-                                    ? _serviceVM.iCPMaxMin.reduce((value, element) =>
-                                        value > element ? value : element)
-                                    : _serviceVM.coinDataList[index].ticker ==
-                                            "MATIC/USD"
-                                        ? _serviceVM.mATICMaxMin.reduce((value,
-                                                element) =>
-                                            value > element ? value : element)
-                                        : _serviceVM.aDAMaxMin.reduce(
-                                            (value, element) => value > element ? value : element),
-                        maxValue: _serviceVM.coinDataList[index].ticker ==
-                                "XBT/USD"
-                            ? _serviceVM.xBTMaxMin.reduce((value, element) =>
-                                value < element ? value : element)
-                            : _serviceVM.coinDataList[index].ticker == "USD/USD"
-                                ? _serviceVM.uSDMaxMin.reduce((value, element) =>
-                                    value < element ? value : element)
-                                : _serviceVM.coinDataList[index].ticker ==
-                                        "ICP/USD"
-                                    ? _serviceVM.iCPMaxMin.reduce((value, element) =>
-                                        value < element ? value : element)
-                                    : _serviceVM.coinDataList[index].ticker ==
-                                            "MATIC/USD"
-                                        ? _serviceVM.mATICMaxMin.reduce((value,
-                                                element) =>
-                                            value < element ? value : element)
-                                        : _serviceVM.aDAMaxMin.reduce(
-                                            (value, element) => value < element ? value : element),
-                        isRise: _serviceVM.coinDataList[index].ticker ==
-                                "XBT/USD"
-                            ? _serviceVM.isRiseXBT.value
-                            : _serviceVM.coinDataList[index].ticker == "USD/USD"
-                                ? _serviceVM.isRiseUSD.value
-                                : _serviceVM.coinDataList[index].ticker ==
-                                        "ICP/USD"
-                                    ? _serviceVM.isRiseICP.value
-                                    : _serviceVM.coinDataList[index].ticker ==
-                                            "MATIC/USD"
-                                        ? _serviceVM.isRiseMATIC.value
-                                        : _serviceVM.isRiseADA.value,
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(top: 10),
+                        shrinkWrap: true,
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 20),
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey.withOpacity(0.2),
+                              highlightColor: Colors.white.withOpacity(0.3),
+                              direction: ShimmerDirection.ltr,
+                              period: const Duration(milliseconds: 2000),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 15,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: AppColor.greyText),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Container(
+                                        height: 10,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: AppColor.greyText),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        height: 15,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: AppColor.greyText),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Container(
+                                        height: 10,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            color: AppColor.greyText),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ),
           ],

@@ -1,8 +1,6 @@
 import 'package:biticonapp/Common/AppBTN/primary_btn.dart';
 import 'package:biticonapp/Common/AppBar/auth_app_bar.dart';
-import 'package:biticonapp/Common/Constant/size_config.dart';
 import 'package:biticonapp/Common/FormFIelds/primary_text_field.dart';
-
 import 'package:biticonapp/Common/Theme/colors.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +68,10 @@ class ForgetScreenView extends StatelessWidget {
                                 key: _serviceVM.forgotFormKey,
                                 child: PrimaryTextField(
                                   isPass: false,
+                                  isEmail: true,
                                   onChange: (value) {
-                                    _serviceVM.forgotFormKey.currentState!
-                                        .validate();
+                                    // _serviceVM.forgotFormKey.currentState!
+                                    //     .validate();
                                     print("object");
                                     _serviceVM.isActiveForgotBtn.value =
                                         value.isNotEmpty ? true : false;

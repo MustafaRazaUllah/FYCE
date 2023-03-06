@@ -13,7 +13,8 @@ import '../../../Common/AppText/AppTextView.dart';
 import '../../../RoutesAndBindings/app_routes.dart';
 
 class SignInView extends StatelessWidget {
-  SignInView({Key? key}) : super(key: key);
+  bool fromOther;
+  SignInView({Key? key, this.fromOther = false}) : super(key: key);
 
   final _serviceVM = Get.find<LoginViewModel>();
   @override
@@ -114,7 +115,7 @@ class SignInView extends StatelessWidget {
                       PrimaryBTN(
                         callback: () {
                           FocusScope.of(context).unfocus();
-                          _serviceVM.onLogin();
+                          _serviceVM.onLogin(from: fromOther);
                         },
                         isActive: true, // _serviceVM.isActiveLoginBtn.value,
                         loading: _serviceVM.isLoadingLogin.value,
@@ -149,7 +150,7 @@ class SignInView extends StatelessWidget {
                         fontWeight: FontWeights.regular),
                     TextButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.signUpView);
+                        Get.toNamed(AppRoutes.signUpView, arguments: fromOther);
                       },
                       child: CustomText(
                           title: "Sign up",

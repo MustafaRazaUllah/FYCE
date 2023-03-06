@@ -17,7 +17,9 @@ class PhoneOtpScreenView extends StatelessWidget {
   PhoneOtpScreenView({Key? key}) : super(key: key);
 
   final _serviceVM = Get.find<SignUpViewModel>();
-  final String phone = Get.arguments;
+  final String phone = Get.arguments[0];
+  final bool fromSide = Get.arguments[1];
+  final int backContextNumber = Get.arguments[2];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +48,11 @@ class PhoneOtpScreenView extends StatelessWidget {
                 OtpFormFields(
                   onComplete: (String val) {
                     print("object $val");
-                    _serviceVM.smsOTPSubmit(val);
+                    _serviceVM.smsOTPSubmit(
+                      val,
+                      from: fromSide,
+                      backcontextNumber: backContextNumber + 1,
+                    );
                   },
                 ),
                 const SizedBox(

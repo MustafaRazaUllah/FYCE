@@ -13,7 +13,8 @@ class AddPinView extends StatelessWidget {
   AddPinView({Key? key}) : super(key: key);
 
   final _serviceVM = Get.find<SignUpViewModel>();
-
+  final bool fromside = Get.arguments[0];
+  final int backContextNumber = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,11 @@ class AddPinView extends StatelessWidget {
             ),
             OtpFormFields(
               onComplete: (val) {
-                _serviceVM.addProtectkey(val);
+                _serviceVM.addProtectkey(
+                  val,
+                  from: fromside,
+                  backcontextNumber: backContextNumber + 1,
+                );
               },
             ),
             const SizedBox(

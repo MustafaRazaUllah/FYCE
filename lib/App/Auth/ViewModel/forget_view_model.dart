@@ -19,16 +19,19 @@ class ForgetViewModel extends GetxController {
   RxBool isLoadingForgot = false.obs;
   void onForgot() async {
     if (index.value == 1) {
-      isLoadingForgot.value = true;
-      Map data = {"email": forgotPassword.value.text};
-      var response = await API().post(ApiManager.FORGOT, data);
-      if (response == "false") {
-        isLoadingForgot.value = false;
-      } else if (response.data["success"] == true &&
-          response.data["statusCode"] == 200) {
-        isLoadingForgot.value = false;
-        print(response.data["message"]);
-        Toast().success(massage: response.data["message"]);
+      if (forgotFormKey.currentState!.validate()) {
+        print(forgotFormKey.currentState!.validate());
+        isLoadingForgot.value = true;
+        Map data = {"email": forgotPassword.value.text};
+        var response = await API().post(ApiManager.FORGOT, data);
+        if (response == null) {
+          isLoadingForgot.value = false;
+        } else if (response.data["success"] == true &&
+            response.data["statusCode"] == 200) {
+          isLoadingForgot.value = false;
+          print(response.data["message"]);
+          Toast().success(massage: response.data["message"]);
+        }
       }
     } else {
       Get.toNamed(

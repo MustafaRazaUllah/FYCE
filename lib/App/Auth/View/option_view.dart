@@ -66,7 +66,7 @@ class OptionView extends StatelessWidget {
                   const SizedBox(height: 10),
                   PrimaryBTN(
                     callback: () {
-                      Get.toNamed(AppRoutes.signUpView);
+                      Get.toNamed(AppRoutes.signUpView, arguments: false);
                     },
                     width: AppConfig(context).width / 1.1,
                     textCLR: AppColor.white,
@@ -84,34 +84,31 @@ class OptionView extends StatelessWidget {
               )),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: InkWell(
-              onTap: () {
-                // Get.toNamed(AppRoutes.signUpView);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomText(
-                      title: "Continue as Guest?",
-                      color: AppColor.greyText,
-                      size: SizeConfig.screenWidth * 0.033,
-                      fontType: FontType.Onest,
-                      fontWeight: FontWeights.regular),
-                  TextButton(
-                    onPressed: () {},
-                    child: CustomText(
-                      title: "Click Here",
-                      color: AppColor.white,
-                      size: SizeConfig.screenWidth * 0.035,
-                      fontType: FontType.Onest,
-                      fontWeight: FontWeights.bold,
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText(
+                    title: "Continue as Guest?",
+                    color: AppColor.greyText,
+                    size: SizeConfig.screenWidth * 0.033,
+                    fontType: FontType.Onest,
+                    fontWeight: FontWeights.regular),
+                TextButton(
+                  onPressed: () {
+                    Get.offAllNamed(AppRoutes.navbarView);
+                  },
+                  child: CustomText(
+                    title: "Click Here",
+                    color: AppColor.white,
+                    size: SizeConfig.screenWidth * 0.035,
+                    fontType: FontType.Onest,
+                    fontWeight: FontWeights.bold,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
           ),
         ),

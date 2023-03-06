@@ -9,7 +9,7 @@ class PrimaryBTN extends StatelessWidget {
   final double width;
   final String title;
   final VoidCallback? callback;
-  final double height;
+  final double? height;
   final double? fontSize;
   final double borderRadius;
   final bool isBorder;
@@ -28,7 +28,7 @@ class PrimaryBTN extends StatelessWidget {
     this.color = AppColor.primaryColor,
     this.fontSize,
     required this.fontWeight,
-    this.height = 54,
+    this.height,
     this.loading = false,
     this.isActive = true,
     this.isBorder = false,
@@ -48,7 +48,7 @@ class PrimaryBTN extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(borderRadius),
       child: Container(
-        height: SizeConfig.screenWidth * 0.15, //height,
+        height: height ?? SizeConfig.screenWidth * 0.15,
         width: width,
         decoration: BoxDecoration(
           color: isActive ? color : AppColor.greyText,

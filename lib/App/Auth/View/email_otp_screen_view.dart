@@ -17,7 +17,9 @@ class EmailOtpScreenView extends StatelessWidget {
   EmailOtpScreenView({Key? key}) : super(key: key);
 
   final _serviceVM = Get.find<SignUpViewModel>();
-  final String email = Get.arguments;
+  final String email = Get.arguments[0];
+  final bool fromSide = Get.arguments[1];
+  final int backContextNumber = Get.arguments[2];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,48 +41,47 @@ class EmailOtpScreenView extends StatelessWidget {
             ),
             OtpFormFields(
               onComplete: (val) {
-                _serviceVM.emailOTPSubmit(val);
+                _serviceVM.emailOTPSubmit(
+                  val,
+                  from: fromSide,
+                  backcontextNumber: backContextNumber + 1,
+                );
               },
             ),
             const SizedBox(
               height: 10,
             ),
-            InkWell(
-              onTap: () {
-                // Get.toNamed(AppRoutes.signUpView);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CustomText(
-                      title: "Didn’t receive a code?  ",
-                      color: AppColor.greyText,
-                      size: 14,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CustomText(
+                    title: "Didn’t receive a code?  ",
+                    color: AppColor.greyText,
+                    size: 14,
+                    fontType: FontType.Onest,
+                    fontWeight: FontWeights.regular),
+                Obx(
+                  () => TextButton(
+                    onPressed: () {
+                      if (_serviceVM.counter.value == 60) {
+                        _serviceVM.reSendTimer("emailOTP");
+                      }
+                    },
+                    child: CustomText(
+                      title: _serviceVM.counter.value == 60
+                          ? "Re-send"
+                          : "${_serviceVM.counter.value}",
+                      color: AppColor.white,
+                      size: SizeConfig.screenWidth * 0.035,
                       fontType: FontType.Onest,
-                      fontWeight: FontWeights.regular),
-                  Obx(
-                    () => TextButton(
-                      onPressed: () {
-                        if (_serviceVM.counter.value == 60) {
-                          _serviceVM.reSendTimer("emailOTP");
-                        }
-                      },
-                      child: CustomText(
-                        title: _serviceVM.counter.value == 60
-                            ? "Re-send"
-                            : "${_serviceVM.counter.value}",
-                        color: AppColor.white,
-                        size: SizeConfig.screenWidth * 0.035,
-                        fontType: FontType.Onest,
-                        fontWeight: FontWeights.bold,
-                      ),
+                      fontWeight: FontWeights.bold,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             )
           ],
         ),

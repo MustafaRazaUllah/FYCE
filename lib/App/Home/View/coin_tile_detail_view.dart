@@ -124,8 +124,8 @@ class CoinDetailView extends StatelessWidget {
               padding: 20,
               percentageColor: AppColor.greyText,
               text1Color: AppColor.greyText,
-              maxValue: 10,
-              minValue: 10,
+              // maxValue: 10,
+              // minValue: 10,
             ),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 20),

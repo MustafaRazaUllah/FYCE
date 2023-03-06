@@ -30,4 +30,10 @@ class ApiManager {
   static const ETHEREUM_WALLET = "wallets/ethereum/check-ethereum-balance";
 
   static const MATIC_WALLET = "wallets/matic/check-matic-balance";
+
+  static const USDC_WALLET = "wallets/usdc/check-usdc-balance";
+
+  static const ICP_WALLET = "wallets/icp/check-icp-balance";
+
+  static const Cardano_WALLET = "wallets/ada/check-ada-balance";
 }

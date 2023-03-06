@@ -1,6 +1,8 @@
+import 'package:biticonapp/App/Auth/View/sign_in_view.dart';
 import 'package:biticonapp/App/Wallet/View%20Model/wallet_viewmodel.dart';
 import 'package:biticonapp/App/Wallet/View/Components/wallet_tile.dart';
 import 'package:biticonapp/Common/Network/api_urls.dart';
+import 'package:biticonapp/Common/Network/cache_handler.dart';
 import 'package:biticonapp/Common/Theme/colors.dart';
 import 'package:biticonapp/RoutesAndBindings/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -41,31 +43,54 @@ class WalletView extends StatelessWidget {
                       childAspectRatio: 1.05),
                   itemBuilder: (context, index) {
                     return walletTile(
-                      callback: () {
-                        if (_serviceVM.wellatsList[index].title == "Bitcoin") {
-                          Get.toNamed(
-                            AppRoutes.walletDetailView,
-                            arguments: _serviceVM.wellatsList[index].title,
-                          );
-                          _serviceVM.getWallet(ApiManager.BITCOIN_WALLET);
-                        } else if (_serviceVM.wellatsList[index].title ==
-                            "Ethereum") {
-                          Get.toNamed(
-                            AppRoutes.walletDetailView,
-                            arguments: _serviceVM.wellatsList[index].title,
-                          );
-                          _serviceVM.getWallet(ApiManager.ETHEREUM_WALLET);
-                        } else if (_serviceVM.wellatsList[index].title ==
-                            "Matic") {
-                          Get.toNamed(
-                            AppRoutes.walletDetailView,
-                            arguments: _serviceVM.wellatsList[index].title,
-                          );
-                          _serviceVM.getWallet(ApiManager.MATIC_WALLET);
+                      callback: () async {
+                        var token = await DatabaseHandler().getToken();
+                        if (token != "") {
+                          print("object => $token");
+                          if (_serviceVM.wellatsList[index].title ==
+                              "Bitcoin") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                            _serviceVM.getWallet(ApiManager.BITCOIN_WALLET);
+                          } else if (_serviceVM.wellatsList[index].title ==
+                              "Ethereum") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                            _serviceVM.getWallet(ApiManager.ETHEREUM_WALLET);
+                          } else if (_serviceVM.wellatsList[index].title ==
+                              "Matic") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                            _serviceVM.getWallet(ApiManager.MATIC_WALLET);
+                          } else if (_serviceVM.wellatsList[index].title ==
+                              "Cardano") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                          } else if (_serviceVM.wellatsList[index].title ==
+                              "USDC") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                            _serviceVM.getWallet(ApiManager.USDC_WALLET);
+                          } else if (_serviceVM.wellatsList[index].title ==
+                              "ICP") {
+                            Get.toNamed(
+                              AppRoutes.walletDetailView,
+                              arguments: _serviceVM.wellatsList[index].title,
+                            );
+                          }
                         } else {
-                          Get.toNamed(
-                            AppRoutes.walletDetailView,
-                            arguments: _serviceVM.wellatsList[index].title,
+                          Get.to(
+                            SignInView(fromOther: true),
                           );
                         }
                       },

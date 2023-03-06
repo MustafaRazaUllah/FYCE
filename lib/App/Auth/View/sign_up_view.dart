@@ -18,7 +18,7 @@ class SignUpView extends StatelessWidget {
   SignUpView({Key? key}) : super(key: key);
   // var signUpViewModel = SignUpViewModel();
   final _serviceVM = Get.find<SignUpViewModel>();
-
+  bool fromSide = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,6 +66,7 @@ class SignUpView extends StatelessWidget {
                               keyBoardType: TextInputType.text,
                               maxLine: 1,
                               headingText: "Full Name",
+                              textCapitalization: TextCapitalization.words,
                             ),
                             const SizedBox(
                               height: 10,
@@ -216,7 +217,7 @@ class SignUpView extends StatelessWidget {
                             ),
                             PrimaryBTN(
                               callback: () {
-                                _serviceVM.onSignUp();
+                                _serviceVM.onSignUp(from: fromSide);
                               },
                               width: double.infinity,
                               textCLR: AppColor.primaryColor,

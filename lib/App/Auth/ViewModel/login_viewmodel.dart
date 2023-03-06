@@ -16,7 +16,7 @@ class LoginViewModel extends GetxController {
   RxString accessToken = "".obs;
 
   final loginFormKey = GlobalKey<FormState>();
-  void onLogin() async {
+  void onLogin({required bool from}) async {
     if (loginFormKey.currentState!.validate()) {
       isLoadingLogin.value = true;
       print("Login Successfully");
@@ -37,7 +37,12 @@ class LoginViewModel extends GetxController {
           Toast().success(massage: response.data["message"]);
           DatabaseHandler().setToken(userData.token);
           isLoadingLogin.value = false;
-          Get.offAllNamed(AppRoutes.navbarView);
+          print("object from-> $from");
+          if (from) {
+            Get.close(1);
+          } else {
+            Get.offAllNamed(AppRoutes.navbarView);
+          }
         } else if (!userData.isPhoneVerified) {
           //
           /* Verification with SMS OTP */
@@ -52,7 +57,11 @@ class LoginViewModel extends GetxController {
             Toast().success(massage: response.data["message"]);
             Get.toNamed(
               AppRoutes.phoneOtpScreenView,
-              arguments: userData.countryCode + userData.contact,
+              arguments: [
+                userData.countryCode + userData.contact,
+                from,
+                2,
+              ],
             );
             isLoadingLogin.value = false;
           } else {
@@ -76,7 +85,11 @@ class LoginViewModel extends GetxController {
             isLoadingLogin.value = false;
             Get.toNamed(
               AppRoutes.emailOtpScreenView,
-              arguments: email.value.text,
+              arguments: [
+                email.value.text,
+                from,
+                3,
+              ],
             );
             Toast().success(massage: response.data["message"]);
           }
@@ -87,7 +100,13 @@ class LoginViewModel extends GetxController {
           //
           // Toast().success(massage: "ProtectKey Verification is pending");
           accessToken.value = userData.token;
-          Get.toNamed(AppRoutes.addPinView);
+          Get.toNamed(
+            AppRoutes.addPinView,
+            arguments: [
+              from,
+              3,
+            ],
+          );
           isLoadingLogin.value = false;
         }
       } else {

@@ -41,7 +41,7 @@ class SignUpViewModel extends GetxController {
 
   final signUpFormKey = GlobalKey<FormState>();
 
-  onSignUp() async {
+  onSignUp({required bool from}) async {
     if (signUpFormKey.currentState!.validate()) {
       print("SignUp Successfully");
       if (password.value.text != re_password.value.text) {
@@ -80,7 +80,11 @@ class SignUpViewModel extends GetxController {
           Toast().success(massage: response.data["message"]);
           Get.toNamed(
             AppRoutes.phoneOtpScreenView,
-            arguments: countryCode.value + phone.value.text,
+            arguments: [
+              countryCode.value + phone.value.text,
+              from,
+              3,
+            ],
           );
           isLoadingSignUp.value = false;
         } else {
@@ -102,7 +106,8 @@ class SignUpViewModel extends GetxController {
 //
 //
 
-  void smsOTPSubmit(String smsOTP) async {
+  void smsOTPSubmit(String smsOTP,
+      {required bool from, required int backcontextNumber}) async {
     Userlogin userdata = await DatabaseHandler().getLoginUser();
     print("smsOTPSubmit ${accessToken.value}");
     Map data = {"code": smsOTP};
@@ -122,7 +127,11 @@ class SignUpViewModel extends GetxController {
       counter.value = 60;
       Get.toNamed(
         AppRoutes.emailOtpScreenView,
-        arguments: email.value.text.isNotEmpty ? email.value.text : userdata.email,
+        arguments: [
+          email.value.text.isNotEmpty ? email.value.text : userdata.email,
+          from,
+          backcontextNumber,
+        ],
       );
     }
   }
@@ -149,7 +158,8 @@ class SignUpViewModel extends GetxController {
 //
 //
 //
-  void emailOTPSubmit(String smsOTP) async {
+  void emailOTPSubmit(String smsOTP,
+      {required bool from, required int backcontextNumber}) async {
     print("emailOTPSubmit");
     Map data = {"code": smsOTP};
     var response = await API().post(
@@ -164,9 +174,10 @@ class SignUpViewModel extends GetxController {
       Toast().success(massage: response.data["message"]);
       resendTimer?.cancel();
       counter.value = 60;
-      Get.toNamed(
-        AppRoutes.addPinView,
-      );
+      Get.toNamed(AppRoutes.addPinView, arguments: [
+        from,
+        backcontextNumber,
+      ]);
     }
   }
 
@@ -180,14 +191,17 @@ class SignUpViewModel extends GetxController {
   Rx<TextEditingController> protectKey = TextEditingController().obs;
   Rx<TextEditingController> re_protectKey = TextEditingController().obs;
 
-  void addProtectkey(String key) {
+  void addProtectkey(String key,
+      {required bool from, required int backcontextNumber}) async {
     protectKey.value.text = key;
-    Get.toNamed(
-      AppRoutes.repeatPinView,
-    );
+    Get.toNamed(AppRoutes.repeatPinView, arguments: [
+      from,
+      backcontextNumber,
+    ]);
   }
 
-  void protectKeySubmit() async {
+  void protectKeySubmit(
+      {required bool from, required int backcontextNumber}) async {
     print(protectKey.value.text + " == " + re_protectKey.value.text);
     if (protectKey.value.text != re_protectKey.value.text) {
       Toast().error(massage: "PIN Code and Re-PIN Code not match");
@@ -213,6 +227,10 @@ class SignUpViewModel extends GetxController {
       );
       Get.toNamed(
         AppRoutes.faceIdView,
+        arguments: [
+          from,
+          backcontextNumber,
+        ],
       );
     }
   }

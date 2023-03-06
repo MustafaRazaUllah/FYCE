@@ -16,6 +16,8 @@ class FaceIdView extends StatelessWidget {
   FaceIdView({Key? key}) : super(key: key);
 
   final _serviceVM = Get.find<SignUpViewModel>();
+  bool fromside = Get.arguments[0];
+  final int backContextNumber = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +73,13 @@ class FaceIdView extends StatelessWidget {
         child: PrimaryBTN(
           callback: () {
             FocusScope.of(context).unfocus();
-            Get.offAllNamed(
-              AppRoutes.navbarView,
-            );
+            if (fromside) {
+              Get.close(backContextNumber);
+            } else {
+              Get.offAllNamed(
+                AppRoutes.navbarView,
+              );
+            }
           },
           width: double.infinity,
           textCLR: AppColor.primaryColor,

@@ -1,10 +1,6 @@
 import 'dart:async';
-
-import 'package:biticonapp/RoutesAndBindings/app_routes.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../Model/onboarding_model.dart';
 
 class OnBoardingViewModel extends GetxController {

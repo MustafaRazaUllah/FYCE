@@ -55,8 +55,20 @@ class WalletViewModel extends GetxController {
       "icon": "assets/images/BitcoinCash.png",
     },
     {
-      "title": "Litecoin",
-      "title2": "0.09642 LTC",
+      "title": "Cardano",
+      "title2": "0.09642 ADA",
+      "risevalue": "-12.232%",
+      "icon": "assets/images/Litecoin.png",
+    },
+    {
+      "title": "USDC",
+      "title2": "0.09642 USDC",
+      "risevalue": "-12.232%",
+      "icon": "assets/images/Litecoin.png",
+    },
+    {
+      "title": "ICP",
+      "title2": "0.09642 ICP",
       "risevalue": "-12.232%",
       "icon": "assets/images/Litecoin.png",
     }

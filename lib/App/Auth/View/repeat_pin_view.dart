@@ -1,21 +1,18 @@
 import 'package:biticonapp/App/Auth/ViewModel/sign_up_view_model.dart';
-import 'package:biticonapp/Common/AppBTN/primary_btn.dart';
-import 'package:biticonapp/Common/AppBar/auth_app_bar.dart';
 import 'package:biticonapp/Common/AppText/AppTextView.dart';
 import 'package:biticonapp/Common/Theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../../Common/AppBar/pin_app_bar.dart';
 import '../../../Common/AppText/font_type.dart';
 import '../../../Common/Constant/AppConfig.dart';
-import '../../../RoutesAndBindings/app_routes.dart';
 import 'components/otp_form_fields.dart';
 
 class RepeatPinView extends StatelessWidget {
   RepeatPinView({Key? key}) : super(key: key);
   final _serviceVM = Get.find<SignUpViewModel>();
+  final bool fromside = Get.arguments[0];
+  final int backContextNumber = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +45,8 @@ class RepeatPinView extends StatelessWidget {
             OtpFormFields(
               onComplete: (val) {
                 _serviceVM.re_protectKey.value.text = val;
-                _serviceVM.protectKeySubmit();
+                _serviceVM.protectKeySubmit(
+                    from: fromside, backcontextNumber: backContextNumber + 1);
               },
             ),
             const SizedBox(
