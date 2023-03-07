@@ -46,6 +46,7 @@ dependencies:
   carousel_slider: ^4.2.1
   qr_code_scanner: ^1.0.1
   shimmer: ^2.0.0
+  qr_flutter: ^4.0.0
 
 
 # Styling
@@ -101,6 +102,7 @@ flutter:
     - assets/logo/
     - assets/icons/
     - assets/images/
+    - assets/wallet/
     - assets/icons/navBar/
 
   # An image asset can refer to one or more resolution-specific "variants", see

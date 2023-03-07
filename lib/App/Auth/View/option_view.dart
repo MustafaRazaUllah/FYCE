@@ -4,6 +4,7 @@ import 'package:biticonapp/Common/AppText/font_type.dart';
 import 'package:biticonapp/Common/Constant/AppConfig.dart';
 import 'package:biticonapp/Common/Constant/size_config.dart';
 import 'package:biticonapp/Common/Theme/colors.dart';
+import 'package:biticonapp/Common/custom_alert.dart';
 import 'package:biticonapp/RoutesAndBindings/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

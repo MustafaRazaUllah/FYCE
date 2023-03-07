@@ -82,12 +82,17 @@ class PrimaryBTN extends StatelessWidget {
                     },
                   ),
                 )
-              : CustomText(
-                  title: title,
-                  color: textCLR,
-                  size: fontSize ?? SizeConfig.screenWidth * 0.04,
-                  fontType: FontType.Avenir,
-                  fontWeight: fontWeight),
+              : Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: CustomText(
+                    title: title,
+                    color: textCLR,
+                    alignment: TextAlign.center,
+                    size: fontSize ?? SizeConfig.screenWidth * 0.04,
+                    fontType: FontType.Avenir,
+                    fontWeight: fontWeight,
+                  ),
+                ),
         ),
       ),
     );

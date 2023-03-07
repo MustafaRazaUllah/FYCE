@@ -33,73 +33,79 @@ class WalletView extends StatelessWidget {
             ),
             Expanded(
               child: GridView.builder(
-                  itemCount: _serviceVM.wellatsList.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 1.05),
-                  itemBuilder: (context, index) {
-                    return walletTile(
-                      callback: () async {
-                        var token = await DatabaseHandler().getToken();
-                        if (token != "") {
-                          print("object => $token");
-                          if (_serviceVM.wellatsList[index].title ==
-                              "Bitcoin") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                            _serviceVM.getWallet(ApiManager.BITCOIN_WALLET);
-                          } else if (_serviceVM.wellatsList[index].title ==
-                              "Ethereum") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                            _serviceVM.getWallet(ApiManager.ETHEREUM_WALLET);
-                          } else if (_serviceVM.wellatsList[index].title ==
-                              "Matic") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                            _serviceVM.getWallet(ApiManager.MATIC_WALLET);
-                          } else if (_serviceVM.wellatsList[index].title ==
-                              "Cardano") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                          } else if (_serviceVM.wellatsList[index].title ==
-                              "USDC") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                            _serviceVM.getWallet(ApiManager.USDC_WALLET);
-                          } else if (_serviceVM.wellatsList[index].title ==
-                              "ICP") {
-                            Get.toNamed(
-                              AppRoutes.walletDetailView,
-                              arguments: _serviceVM.wellatsList[index].title,
-                            );
-                          }
-                        } else {
-                          Get.to(
-                            SignInView(fromOther: true),
+                itemCount: _serviceVM.wellatsList.length,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 6,
+                    crossAxisSpacing: 6,
+                    childAspectRatio: 1.05),
+                itemBuilder: (context, index) {
+                  return walletTile(
+                    callback: () async {
+                      var token = await DatabaseHandler().getToken();
+                      if (token != "") {
+                        print("object => $token");
+                        if (_serviceVM.wellatsList[index].title == "BTC") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
+                          );
+                          _serviceVM.getWallet(ApiManager.BITCOIN_WALLET);
+                        } else if (_serviceVM.wellatsList[index].title ==
+                            "ETH") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
+                          );
+                          _serviceVM.getWallet(ApiManager.ETHEREUM_WALLET);
+                        } else if (_serviceVM.wellatsList[index].title ==
+                            "MATIC") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
+                          );
+                          _serviceVM.getWallet(ApiManager.MATIC_WALLET);
+                        } else if (_serviceVM.wellatsList[index].title ==
+                            "ADA") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
+                          );
+                        } else if (_serviceVM.wellatsList[index].title ==
+                            "USDC") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
+                          );
+                          _serviceVM.getWallet(ApiManager.USDC_WALLET);
+                        } else if (_serviceVM.wellatsList[index].title ==
+                            "ICP") {
+                          Get.toNamed(
+                            AppRoutes.walletDetailView,
+                            arguments: _serviceVM.wellatsList[index].title,
                           );
                         }
-                      },
-                      title: _serviceVM.wellatsList[index].title,
-                      title2: _serviceVM.wellatsList[index].title2,
-                      riseValue: _serviceVM.wellatsList[index].risevalue,
-                      icon: "assets/images/Bitcoin.png",
-                    );
-                  }),
+                      } else {
+                        Get.to(
+                          SignInView(fromOther: true),
+                        );
+                      }
+                    },
+                    title: _serviceVM.wellatsList[index].title,
+                    currencyname: _serviceVM.wellatsList[index].currencyName,
+                    title2: _serviceVM.wellatsList[index].title2,
+                    backgroundColor:
+                        Color(_serviceVM.wellatsList[index].currencyColor),
+                    textColor:
+                        Color(_serviceVM.wellatsList[index].currencyTextColor),
+                    riseValue: _serviceVM.wellatsList[index].risevalue,
+                    icon: _serviceVM.wellatsList[index]
+                        .currencyImage, //"assets/images/Bitcoin.png",
+                  );
+                },
+              ),
             )
           ],
         ),

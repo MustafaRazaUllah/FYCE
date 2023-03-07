@@ -25,9 +25,22 @@ class AppColor {
   static const Color darkText = Color(0xFF1D2733);
   static const Color greyText = Color(0xff5A5A5A);
   static const Color greyLightShade = Color(0xff6C727F);
+  
 
   // ! TextField Colors
   static const Color textFieldColor = Color(0xffF9F9FC);
+
+  // ! Button Colors
+  static const Color popupColor = Color(0xff1E1E1E);
+  static const Color popUpButtonColor = Color(0xffE4E4E4);
+
+  // ! wellats Colors
+  static const Color greyLight = Color(0xff979797);
+  static const Color black54color = Color(0xff353434);
+  
+
+
+  
 }
 
 class FontWeights {
@@ -39,8 +52,8 @@ class FontWeights {
 }
 
 class HexColor extends Color {
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-  static int _getColorFromHex(String hexColor) {
+  HexColor(final String hexColor) : super(getColorFromHex(hexColor));
+  static int getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     if (hexColor.length == 6) {
       hexColor = 'FF$hexColor';

@@ -158,8 +158,12 @@ class SignUpViewModel extends GetxController {
 //
 //
 //
-  void emailOTPSubmit(String smsOTP,
-      {required bool from, required int backcontextNumber}) async {
+  void emailOTPSubmit(
+    String smsOTP, {
+    // required bool from,
+    // required int backcontextNumber,
+    required Function callback,
+  }) async {
     print("emailOTPSubmit");
     Map data = {"code": smsOTP};
     var response = await API().post(
@@ -174,10 +178,7 @@ class SignUpViewModel extends GetxController {
       Toast().success(massage: response.data["message"]);
       resendTimer?.cancel();
       counter.value = 60;
-      Get.toNamed(AppRoutes.addPinView, arguments: [
-        from,
-        backcontextNumber,
-      ]);
+      callback();
     }
   }
 

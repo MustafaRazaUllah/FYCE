@@ -6,6 +6,7 @@ import 'package:biticonapp/Common/AppText/AppTextView.dart';
 import 'package:biticonapp/Common/Constant/AppConfig.dart';
 import 'package:biticonapp/Common/Constant/size_config.dart';
 import 'package:biticonapp/Common/Theme/colors.dart';
+import 'package:biticonapp/Common/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -43,8 +44,27 @@ class EmailOtpScreenView extends StatelessWidget {
               onComplete: (val) {
                 _serviceVM.emailOTPSubmit(
                   val,
-                  from: fromSide,
-                  backcontextNumber: backContextNumber + 1,
+                  callback: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomAlertBox(
+                          title: 'Successfully Verified',
+                          imagePath: 'assets/icons/verified.png',
+                          btnText: "OK",
+                          callback: () {
+                            Get.toNamed(
+                              AppRoutes.addPinView,
+                              arguments: [
+                                fromSide,
+                                backContextNumber + 1,
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
                 );
               },
             ),

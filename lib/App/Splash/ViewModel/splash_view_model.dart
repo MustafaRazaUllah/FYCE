@@ -14,8 +14,8 @@ class SplashViewModel extends GetxController {
   void onInit() {
     // TODO: implement onInit
     timer = Timer(const Duration(seconds: 2), () {
-      // checkUser();
-      Get.offAllNamed(AppRoutes.onboard);
+      checkUser();
+      // Get.offAllNamed(AppRoutes.onboard);
     });
   }
 
